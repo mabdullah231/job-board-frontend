@@ -5,7 +5,7 @@ import Layout from "./screens/Layout";
 // import Login from "./screens/Auth/Login";
 // import Register from "./screens/Auth/Register";
 import Helpers from "./config/Helpers";
-import { Home,Jobs,Contact } from "./screens";
+import { Home,Jobs,Contact,JobDetails, Login, Register } from "./screens";
 
 
 const Auth = ({ children, isAuth = true, isAdmin = false }) => {
@@ -67,6 +67,9 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/jobs" element={<Jobs/>}/>
           <Route path="/contact" element={<Contact/>}/>
+          <Route path="/jobdetails" element={<JobDetails/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
           {/* <Route
             path="/register"
             element={

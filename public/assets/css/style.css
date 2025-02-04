@@ -3451,7 +3451,7 @@ h3 {
 
 /* line 141, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_list.scss */
 .job_listing_area .job_filter .form_inner .single_field input {
-  height: 60px;
+  height: 40px;
   border: 1px solid #E8E8E8;
   padding: 20px;
   -webkit-border-radius: 5px;
