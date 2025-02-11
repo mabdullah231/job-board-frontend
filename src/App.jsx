@@ -1,9 +1,6 @@
 // src/App.jsx
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./screens/Layout";
-// import Home from "./screens/Home";
-// import Login from "./screens/Auth/Login";
-// import Register from "./screens/Auth/Register";
 import Helpers from "./config/Helpers";
 import { Home,Jobs,Contact,JobDetails, Login, Register } from "./screens";
 
