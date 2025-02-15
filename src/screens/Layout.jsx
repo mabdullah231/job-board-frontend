@@ -39,38 +39,6 @@ const Layout = () => {
     Helpers.toggleCSS();
   }, [location.pathname]);
 
-  //   useEffect(() => {
-  //     console.log("asdf");
-  //     Helpers.loadScript("jquery-1.12.4.min.js") // Load modernizr first
-  //       .then(() => Helpers.loadScript("modernizr-3.5.0.min.js")) // Load jQuery next
-  //       .then(() => Helpers.loadScript("popper.min.js"))
-  //       .then(() => Helpers.loadScript("bootstrap.min.js"))
-  //       .then(() => Helpers.loadScript("owl.carousel.min.js"))
-  //       .then(() => Helpers.loadScript("isotope.pkgd.min.js"))
-  //       .then(() => Helpers.loadScript("ajax-form.js"))
-  //       .then(() => Helpers.loadScript("waypoints.min.js"))
-  //       .then(() => Helpers.loadScript("jquery.counterup.min.js"))
-  //       .then(() => Helpers.loadScript("imagesloaded.pkgd.min.js"))
-  //       .then(() => Helpers.loadScript("scrollIt.js"))
-  //       .then(() => Helpers.loadScript("jquery.scrollUp.min.js"))
-  //       .then(() => Helpers.loadScript("wow.min.js"))
-  //       .then(() => Helpers.loadScript("nice-select.min.js"))
-  //       .then(() => Helpers.loadScript("jquery.slicknav.min.js"))
-  //       .then(() => Helpers.loadScript("jquery.magnific-popup.min.js"))
-  //       .then(() => Helpers.loadScript("plugins.js"))
-  //       .then(() => Helpers.loadScript("gijgo.min.js"))
-  //       .then(() => Helpers.loadScript("contact.js"))
-  //       .then(() => Helpers.loadScript("jquery.ajaxchimp.min.js"))
-  //       .then(() => Helpers.loadScript("jquery.form.js"))
-  //       .then(() => Helpers.loadScript("jquery.validate.min.js"))
-  //       .then(() => Helpers.loadScript("mail-script.js"))
-  //       .then(() => Helpers.loadScript("main.js")) // Load main.js last
-  //       .then(() =>
-  //         setTimeout(() => {
-  //           //   setLoader(false);
-  //         }, 1000)
-  //       );
-  //   }, []);
 
   useEffect(() => {
     Helpers.loadScript("modernizr-3.5.0.min.js") // Load Modernizr first

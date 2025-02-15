@@ -5,76 +5,114 @@ import Helpers from "./config/Helpers";
 import { Home,Jobs,Contact,JobDetails, Login, Register } from "./screens";
 
 
-const Auth = ({ children, isAuth = true, isAdmin = false }) => {
-  let user = Helpers.getItem("user", true);
-  let token = Helpers.getItem("token");
-  let loginTime = Helpers.getItem("loginTimestamp");
-  let currentTime = new Date().getTime();
-  let minutesPassed = Math.floor((currentTime - loginTime) / (1000 * 60));
+const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
+  let user = Helpers.getItem("user", true); // Get stored user
+  let token = Helpers.getItem("token"); // Get stored token
 
-  // Check for session expiration
-  if (loginTime && minutesPassed > 120) {
-    localStorage.clear();
-    Helpers.toast("error", "Session expired. Login again to continue");
-    return <Navigate to="/login" />;
-  }
-  // For protected routes
-  else if (isAuth) {
+  // If the route requires authentication
+  if (isAuth) {
     if (!user || !token) {
       Helpers.toast("error", "Please login to continue");
       return <Navigate to="/login" />;
     }
 
-    // Ensure only admins can access admin routes
-    if (isAdmin && parseInt(user.user_type) !== 1) {
-      Helpers.toast("error", "Access denied. Only admin allowed.");
-      return <Navigate to="/user/dashboard" />;
+    // Check if user has permission to access the route
+    if (allowedRoles.length > 0 && !allowedRoles.includes(parseInt(user.user_type))) {
+      Helpers.toast("error", "Access denied.");
+      
+      // Redirect based on user role
+      switch (parseInt(user.user_type)) {
+        case 0:
+          return <Navigate to="/admin/dashboard" />;
+        case 1:
+          return <Navigate to="/poster/dashboard" />;
+        case 2:
+          return <Navigate to="/user/dashboard" />;
+        default:
+          return <Navigate to="/login" />;
+      }
     }
 
-    // Ensure admins cannot access user routes
-    if (!isAdmin && parseInt(user.user_type) === 1) {
-      Helpers.toast(
-        "error",
-        "Access denied. Admins cannot access user routes."
-      );
-      return <Navigate to="/admin/dashboard" />;
-    }
-
-    return children;
-  }
-  // For non-protected routes like /login
+    return children; // User is authenticated and has access
+  } 
+  
+  // For public routes
   else {
     if (user && token) {
-      if (user.user_type === 1) {
-        return <Navigate to="/admin/dashboard" />;
-      } else {
-        return <Navigate to="/user/dashboard" />;
+      switch (parseInt(user.user_type)) {
+        case 0:
+          return <Navigate to="/admin/dashboard" />;
+        case 1:
+          return <Navigate to="/poster/dashboard" />;
+        case 2:
+          return <Navigate to="/user/dashboard" />;
+        default:
+          return <Navigate to="/login" />;
       }
     }
     return children;
   }
 };
 
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={<Layout />}>
+//           {/* <Route path="/login" element={<Login />} /> */}
+//           <Route path="/" element={<Home/>}/>
+//           <Route path="/jobs" element={<Jobs/>}/>
+//           <Route path="/contact" element={<Contact/>}/>
+//           <Route path="/jobdetails" element={<JobDetails/>}/>
+//           <Route path="/login" element={<Login/>}/>
+//           <Route path="/register" element={<Register/>}/>
+//           {/* <Route
+//             path="/register"
+//             element={
+//               <Auth isAuth={false}>
+//                 <Register />
+//               </Auth>
+//             }
+//           /> */}
+//         </Route>
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/" element={<Home/>}/>
-          <Route path="/jobs" element={<Jobs/>}/>
-          <Route path="/contact" element={<Contact/>}/>
-          <Route path="/jobdetails" element={<JobDetails/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          {/* <Route
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/jobdetails" element={<JobDetails />} />
+
+          {/* Public routes but restricted for logged-in users */}
+          <Route
+            path="/login"
+            element={
+              <Auth isAuth={false}>
+                <Login />
+              </Auth>
+            }
+          />
+          <Route
             path="/register"
             element={
               <Auth isAuth={false}>
                 <Register />
               </Auth>
             }
-          /> */}
+          />
+
+          {/* Protected Routes Based on Roles */}
+          {/* <Route path="/user" element={<Auth allowedRoles={[2]}><UserDashboard /></Auth>} /> */}
+          {/* <Route path="/poster" element={<Auth allowedRoles={[1]}><PosterDashboard /></Auth>} /> */}
+          {/* <Route path="/admin" element={<Auth allowedRoles={[0]}><AdminDashboard /></Auth>} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

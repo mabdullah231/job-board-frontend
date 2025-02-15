@@ -36,6 +36,15 @@ class Helpers {
     }
   };
 
+  static scrollToTop(smooth = true) {
+    window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+  }
+  
+  static removeItem = (name) => {
+    localStorage.removeItem(name);
+  };
+  
+
   static setItem = (key, data, isJson = false) => {
     if (isJson) {
       localStorage.setItem(key, JSON.stringify(data));

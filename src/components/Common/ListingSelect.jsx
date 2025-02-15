@@ -1,5 +1,5 @@
 import React from "react";
-import Select from "react-select"; // Import react-select
+import Select from "react-select"; 
 
 const ListingSelect = ({ label, name, value, onChange, options, placeholder }) => {
     const handleChange = (selectedItem) => {

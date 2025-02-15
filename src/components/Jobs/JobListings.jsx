@@ -104,7 +104,11 @@ const JobListings = () => {
 
   const filteredJobs = jobs.filter((job) => {
     return (
-        job.title.toLowerCase().includes(filters.searchKeyword ? filters.searchKeyword.toLowerCase() : '') &&
+      job.title
+        .toLowerCase()
+        .includes(
+          filters.searchKeyword ? filters.searchKeyword.toLowerCase() : ""
+        ) &&
       (filters.location === "" ||
         job.location.toLowerCase().includes(filters.location.toLowerCase())) &&
       (filters.jobType === "" ||

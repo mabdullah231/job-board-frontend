@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Helpers from "../../config/Helpers";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
+
+  const navigate = useNavigate(); // For redirection
 
   // Handle input changes
   const handleChange = (e) => {
@@ -15,11 +19,46 @@ const Login = () => {
       [name]: value,
     });
   };
+
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
-    console.log(loginData); // Log the login data to the console
-    // Here you can add further logic, like sending the data to an API
+
+    // Validate fields
+    if (!loginData.email || !loginData.password) {
+      Helpers.toast("error", "Email and Password are required.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${Helpers.apiUrl}auth/login`,
+        loginData
+      );
+
+      if (response.data.code === "EMAIL_NOT_VERIFIED") {
+        Helpers.toast("error", "Verify your email before logging in.");
+        return;
+      }
+
+      Helpers.toast("success", "Login successful.");
+      Helpers.setItem("token", response.data.token);
+      Helpers.setItem("user", JSON.stringify(response.data.user));
+      navigate("/"); // Redirect to dashboard after login
+      Helpers.scrollToTop();
+    } catch (error) {
+      let errorMessage = "Invalid credentials.";
+
+      if (error.response) {
+        errorMessage = error.response.data.message || errorMessage;
+      } else if (error.request) {
+        errorMessage = "No response from server. Please check your internet.";
+      } else {
+        errorMessage = error.message;
+      }
+
+      Helpers.toast("error", errorMessage);
+    }
   };
 
   return (
@@ -38,7 +77,12 @@ const Login = () => {
 
       <div className="login-form-area">
         <div className="container col-xl-4 py-5">
-            <img src="/assets/img/logo-small.png" className="mb-4 d-block mx-auto" alt="" />
+          <img
+            src="/assets/img/logo-small.png"
+            className="mb-4 d-block mx-auto"
+            alt="Logo"
+          />
+
           <form onSubmit={handleSubmit} className="form-login">
             <div className="form-group">
               <input
@@ -48,7 +92,6 @@ const Login = () => {
                 placeholder="Enter your email"
                 value={loginData.email}
                 onChange={handleChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -59,17 +102,26 @@ const Login = () => {
                 placeholder="Enter your password"
                 value={loginData.password}
                 onChange={handleChange}
-                required
               />
             </div>
-            <button type="submit" className="button button-login mt-2 mb-4 w-100 btn_4 boxed-btn">
+
+            <button
+              type="submit"
+              className="button button-login mt-2 mb-4 w-100 btn_4 boxed-btn"
+            >
               Log In
             </button>
+
             <div className="forgot-password">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>
             <div className="my-2">
-              <p>Don't Have an Account? <Link to="/register"><span className="">Register Here</span></Link></p>
+              <p>
+                Don't Have an Account?{" "}
+                <Link to="/register">
+                  <span className="">Register Here</span>
+                </Link>
+              </p>
             </div>
           </form>
         </div>
