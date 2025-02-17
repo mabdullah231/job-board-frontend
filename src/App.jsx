@@ -1,8 +1,11 @@
 // src/App.jsx
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./screens/Layout";
+import AdminLayout from "./screens/Admin/AdminLayout";
 import Helpers from "./config/Helpers";
-import { Home,Jobs,Contact,JobDetails, Login, Register } from "./screens";
+import { Home, Jobs, Contact, JobDetails, Login, Register } from "./screens";
+import { AdminDashboard, AdminCities, AdminCategories, AdminSkills, AdminTags, AdminUsers } from "./screens/Admin/Pages";
+
 
 
 const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
@@ -17,9 +20,12 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
     }
 
     // Check if user has permission to access the route
-    if (allowedRoles.length > 0 && !allowedRoles.includes(parseInt(user.user_type))) {
+    if (
+      allowedRoles.length > 0 &&
+      !allowedRoles.includes(parseInt(user.user_type))
+    ) {
       Helpers.toast("error", "Access denied.");
-      
+
       // Redirect based on user role
       switch (parseInt(user.user_type)) {
         case 0:
@@ -27,15 +33,15 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
         case 1:
           return <Navigate to="/poster/dashboard" />;
         case 2:
-          return <Navigate to="/user/dashboard" />;
+          return <Navigate to="/" />;
         default:
           return <Navigate to="/login" />;
       }
     }
 
     return children; // User is authenticated and has access
-  } 
-  
+  }
+
   // For public routes
   else {
     if (user && token) {
@@ -44,41 +50,15 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
           return <Navigate to="/admin/dashboard" />;
         case 1:
           return <Navigate to="/poster/dashboard" />;
-        case 2:
-          return <Navigate to="/user/dashboard" />;
-        default:
-          return <Navigate to="/login" />;
+        // case 2:
+        //   return <Navigate to="/user/dashboard" />;
+        // default:
+        //   return <Navigate to="/login" />;
       }
     }
     return children;
   }
 };
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Layout />}>
-//           {/* <Route path="/login" element={<Login />} /> */}
-//           <Route path="/" element={<Home/>}/>
-//           <Route path="/jobs" element={<Jobs/>}/>
-//           <Route path="/contact" element={<Contact/>}/>
-//           <Route path="/jobdetails" element={<JobDetails/>}/>
-//           <Route path="/login" element={<Login/>}/>
-//           <Route path="/register" element={<Register/>}/>
-//           {/* <Route
-//             path="/register"
-//             element={
-//               <Auth isAuth={false}>
-//                 <Register />
-//               </Auth>
-//             }
-//           /> */}
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
 
 function App() {
   return (
@@ -109,11 +89,57 @@ function App() {
             }
           />
 
-          {/* Protected Routes Based on Roles */}
-          {/* <Route path="/user" element={<Auth allowedRoles={[2]}><UserDashboard /></Auth>} /> */}
-          {/* <Route path="/poster" element={<Auth allowedRoles={[1]}><PosterDashboard /></Auth>} /> */}
-          {/* <Route path="/admin" element={<Auth allowedRoles={[0]}><AdminDashboard /></Auth>} /> */}
         </Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route
+              path="dashboard"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminDashboard />
+                </Auth>
+              }
+            />
+            <Route
+              path="cities"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminCities />
+                </Auth>
+              }
+            />
+            <Route
+              path="categories"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminCategories />
+                </Auth>
+              }
+            />
+            <Route
+              path="skills"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminSkills />
+                </Auth>
+              }
+            />
+            <Route
+              path="tags"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminTags />
+                </Auth>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <Auth allowedRoles={[0]}>
+                  <AdminUsers />
+                </Auth>
+              }
+            />
+          </Route>
       </Routes>
     </BrowserRouter>
   );

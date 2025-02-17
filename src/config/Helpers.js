@@ -8,6 +8,8 @@ class Helpers {
   static basePath = `//${this.localhost}`;
   static apiUrl = `${this.basePath}/api/`;
   static googleUrl = `${this.basePath}/`;
+  static ASSETS_IMAGES_PATH = '/assets/img';
+  static DASHBOARD_IMAGES_PATH = '/dashboard/images';
 
   static authUser = JSON.parse(localStorage.getItem("user")) ?? {};
   static serverImage = (name) => {
@@ -122,6 +124,7 @@ class Helpers {
       document.body.appendChild(script);
     });
   }
+
 
 }
 

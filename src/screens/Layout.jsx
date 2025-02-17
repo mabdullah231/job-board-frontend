@@ -1,39 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import Helpers from "../Config/Helpers";
+import Helpers from "../Config/Helpers.js";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header, Footer } from "../components";
 // import PageLoader from "../Components/Loader/PageLoader";
 
 const Layout = () => {
   const location = useLocation();
-  //   const navigate = useNavigate();
     const [loader, setLoader] = useState(true);
 
-  //   const scrollToSection = (id) => {
-  //     const element = document.getElementById(id);
-  //     const offset = 80; // Adjust this value according to your navbar height
-  //     const elementPosition = element.getBoundingClientRect().top;
-  //     const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-  //     window.scrollTo({
-  //       top: offsetPosition,
-  //       behavior: "smooth",
-  //     });
-  //   };
-
-  //   const handleNavigation = (id) => {
-  //     if (
-  //       location.pathname.includes("/login") ||
-  //       location.pathname.includes("/register")
-  //     ) {
-  //       navigate("/");
-  //       setTimeout(() => {
-  //         scrollToSection(id);
-  //       }, 100);
-  //     } else {
-  //       scrollToSection(id);
-  //     }
-  //   };
 
   useEffect(() => {
     Helpers.toggleCSS();

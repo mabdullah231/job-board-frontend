@@ -44,7 +44,17 @@ const Login = () => {
       Helpers.toast("success", "Login successful.");
       Helpers.setItem("token", response.data.token);
       Helpers.setItem("user", JSON.stringify(response.data.user));
-      navigate("/"); // Redirect to dashboard after login
+      const userType = response.data.user.user_type;
+      console.log("User Type", userType);
+      if (parseInt(userType) == 0) {
+        console.log("Navigating To Admin");
+        navigate("/admin/dashboard");
+      } else if (parseInt(userType) == 1) {
+        console.log("Navigating To Employer Dashboard");
+        navigate("/poster/dashboard");
+      } else if (parseInt(userType) == 2) {
+        navigate("/");
+      }
       Helpers.scrollToTop();
     } catch (error) {
       let errorMessage = "Invalid credentials.";
