@@ -2,11 +2,23 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./screens/Layout";
 import AdminLayout from "./screens/Admin/AdminLayout";
-import Helpers from "./config/Helpers";
+import Helpers from "./Config/Helpers";
 import { Home, Jobs, Contact, JobDetails, Login, Register } from "./screens";
-import { AdminDashboard, AdminCities, AdminCategories, AdminSkills, AdminTags, AdminUsers } from "./screens/Admin/Pages";
-
-
+import {
+  AdminDashboard,
+  AdminCities,
+  AdminCategories,
+  AdminSkills,
+  AdminTags,
+  AdminUsers,
+} from "./screens/Admin/Pages";
+import EmployerLayout from "./screens/Employer/EmployerLayout";
+import {
+  Company,
+  EmployerDashboard,
+  JobApplications,
+  JobPosts,
+} from "./screens/Employer/Pages";
 
 const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
   let user = Helpers.getItem("user", true); // Get stored user
@@ -31,7 +43,7 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
         case 0:
           return <Navigate to="/admin/dashboard" />;
         case 1:
-          return <Navigate to="/poster/dashboard" />;
+          return <Navigate to="/employer/dashboard" />;
         case 2:
           return <Navigate to="/" />;
         default:
@@ -49,7 +61,7 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
         case 0:
           return <Navigate to="/admin/dashboard" />;
         case 1:
-          return <Navigate to="/poster/dashboard" />;
+          return <Navigate to="/employer/dashboard" />;
         // case 2:
         //   return <Navigate to="/user/dashboard" />;
         // default:
@@ -69,7 +81,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/jobdetails" element={<JobDetails />} />
+          <Route path="/jobdetails/:id" element={<JobDetails />} />
 
           {/* Public routes but restricted for logged-in users */}
           <Route
@@ -88,58 +100,91 @@ function App() {
               </Auth>
             }
           />
-
         </Route>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route
-              path="dashboard"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminDashboard />
-                </Auth>
-              }
-            />
-            <Route
-              path="cities"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminCities />
-                </Auth>
-              }
-            />
-            <Route
-              path="categories"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminCategories />
-                </Auth>
-              }
-            />
-            <Route
-              path="skills"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminSkills />
-                </Auth>
-              }
-            />
-            <Route
-              path="tags"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminTags />
-                </Auth>
-              }
-            />
-            <Route
-              path="users"
-              element={
-                <Auth allowedRoles={[0]}>
-                  <AdminUsers />
-                </Auth>
-              }
-            />
-          </Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route
+            path="dashboard"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminDashboard />
+              </Auth>
+            }
+          />
+          <Route
+            path="cities"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminCities />
+              </Auth>
+            }
+          />
+          <Route
+            path="categories"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminCategories />
+              </Auth>
+            }
+          />
+          <Route
+            path="skills"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminSkills />
+              </Auth>
+            }
+          />
+          <Route
+            path="tags"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminTags />
+              </Auth>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <Auth allowedRoles={[0]}>
+                <AdminUsers />
+              </Auth>
+            }
+          />
+        </Route>
+        <Route path="/employer" element={<EmployerLayout />}>
+          <Route
+            path="dashboard"
+            element={
+              <Auth allowedRoles={[1]}>
+                <EmployerDashboard />
+              </Auth>
+            }
+          />
+          <Route
+            path="company"
+            element={
+              <Auth allowedRoles={[1]}>
+                <Company />
+              </Auth>
+            }
+          />
+          <Route
+            path="job_applications"
+            element={
+              <Auth allowedRoles={[1]}>
+                <JobApplications />
+              </Auth>
+            }
+          />
+          <Route
+            path="job_posts"
+            element={
+              <Auth allowedRoles={[1]}>
+                <JobPosts />
+              </Auth>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

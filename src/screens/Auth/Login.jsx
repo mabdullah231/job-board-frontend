@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Helpers from "../../config/Helpers";
+import Helpers from "../../Config/Helpers";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -51,7 +51,7 @@ const Login = () => {
         navigate("/admin/dashboard");
       } else if (parseInt(userType) == 1) {
         console.log("Navigating To Employer Dashboard");
-        navigate("/poster/dashboard");
+        navigate("/employer/dashboard");
       } else if (parseInt(userType) == 2) {
         navigate("/");
       }

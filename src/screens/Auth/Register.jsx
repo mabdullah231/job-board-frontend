@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import axios from "axios";
-import Helpers from "../../config/Helpers";
+import Helpers from "../../Config/Helpers";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -41,19 +41,25 @@ const Register = () => {
 
     // Validation
     if (!registerData.name) return Helpers.toast("error", "Name is required.");
-    if (!registerData.email) return Helpers.toast("error", "Email is required.");
-    if (!registerData.password) return Helpers.toast("error", "Password is required.");
+    if (!registerData.email)
+      return Helpers.toast("error", "Email is required.");
+    if (!registerData.password)
+      return Helpers.toast("error", "Password is required.");
     if (!registerData.password_confirmation)
       return Helpers.toast("error", "Password confirmation is required.");
     if (registerData.password !== registerData.password_confirmation)
       return Helpers.toast("error", "Passwords do not match.");
-    if (!registerData.userType) return Helpers.toast("error", "User type is required.");
+    if (!registerData.userType)
+      return Helpers.toast("error", "User type is required.");
 
     try {
-      const response = await axios.post(`${Helpers.apiUrl}auth/register`, registerData);
+      const response = await axios.post(
+        `${Helpers.apiUrl}auth/register`,
+        registerData
+      );
       console.log(response);
       Helpers.toast("success", "Registration successful! Login Please");
-      navigate('/login')
+      navigate("/login");
       // Handle successful registration (e.g., redirect)
     } catch (error) {
       let errorMessage = "Something went wrong. Please try again.";
@@ -61,7 +67,8 @@ const Register = () => {
       if (error.response) {
         errorMessage = error.response.data.message || errorMessage;
       } else if (error.request) {
-        errorMessage = "No response from server. Please check your internet connection.";
+        errorMessage =
+          "No response from server. Please check your internet connection.";
       } else {
         errorMessage = error.message;
       }
@@ -136,7 +143,9 @@ const Register = () => {
               <Select
                 name="userType"
                 className="form-select"
-                value={roleOptions.find((option) => option.value === registerData.userType)}
+                value={roleOptions.find(
+                  (option) => option.value === registerData.userType
+                )}
                 onChange={handleChange}
                 options={roleOptions}
                 placeholder="Select Role"

@@ -8,12 +8,12 @@ class Helpers {
   static basePath = `//${this.localhost}`;
   static apiUrl = `${this.basePath}/api/`;
   static googleUrl = `${this.basePath}/`;
-  static ASSETS_IMAGES_PATH = '/assets/img';
-  static DASHBOARD_IMAGES_PATH = '/dashboard/images';
+  static ASSETS_IMAGES_PATH = "/assets/img";
+  static DASHBOARD_IMAGES_PATH = "/dashboard/images";
 
   static authUser = JSON.parse(localStorage.getItem("user")) ?? {};
   static serverImage = (name) => {
-    return `${this.basePath}/uploads/${name}`;
+    return `${this.basePath}/${name}`;
   };
 
   static authHeaders = {
@@ -30,6 +30,24 @@ class Helpers {
     },
   };
 
+  static getAuthHeaders() {
+    return {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+  }
+
+  static getAuthFileHeaders() {
+    return {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+  }
+
   static getItem = (data, isJson = false) => {
     if (isJson) {
       return JSON.parse(localStorage.getItem(data));
@@ -41,11 +59,10 @@ class Helpers {
   static scrollToTop(smooth = true) {
     window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
   }
-  
+
   static removeItem = (name) => {
     localStorage.removeItem(name);
   };
-  
 
   static setItem = (key, data, isJson = false) => {
     if (isJson) {
@@ -84,7 +101,7 @@ class Helpers {
       });
     };
 
-    if (path.includes("/user") || path.includes("/admin")) {
+    if (path.includes("/employer") || path.includes("/admin")) {
       preloadStyles(Array.from(dashboardCSS));
       // Disable main theme and enable dashboard theme
       setTimeout(() => {
@@ -111,8 +128,9 @@ class Helpers {
 
   static loadScript(scriptName, dashboard = false) {
     return new Promise((resolve, reject) => {
-      const scriptPath = `/${dashboard ? "dashboard" : "assets"
-        }/js/${scriptName}`;
+      const scriptPath = `/${
+        dashboard ? "dashboard" : "assets"
+      }/js/${scriptName}`;
       const script = document.createElement("script");
       script.src = scriptPath;
       script.async = true;
@@ -124,8 +142,6 @@ class Helpers {
       document.body.appendChild(script);
     });
   }
-
-
 }
 
 export default Helpers;

@@ -1,29 +1,30 @@
+import Helpers from "../../Config/Helpers";
 import SingleCompany from "../Common/SingleCompany";
 
-const HomeCompanies = () => {
-  const companies = [
-    {
-      name: "Snack Studio",
-      availablePositions: 50,
-      imagePath: "assets/img/svg_icon/5.svg",
-    },
-    {
-      name: "Tech Innovations",
-      availablePositions: 50,
-      imagePath: "assets/img/svg_icon/4.svg",
-    },
-    {
-      name: "Creative Solutions",
-      availablePositions: 50,
-      imagePath: "assets/img/svg_icon/3.svg",
-    },
-    {
-      name: "Design Hub",
-      availablePositions: 50,
-      imagePath: "assets/img/svg_icon/1.svg",
-    },
-  ];
-
+const HomeCompanies = ({companies}) => {
+  // const companies = [
+  //   {
+  //     name: "Snack Studio",
+  //     availablePositions: 50,
+  //     imagePath: "assets/img/svg_icon/5.svg",
+  //   },
+  //   {
+  //     name: "Tech Innovations",
+  //     availablePositions: 50,
+  //     imagePath: "assets/img/svg_icon/4.svg",
+  //   },
+  //   {
+  //     name: "Creative Solutions",
+  //     availablePositions: 50,
+  //     imagePath: "assets/img/svg_icon/3.svg",
+  //   },
+  //   {
+  //     name: "Design Hub",
+  //     availablePositions: 50,
+  //     imagePath: "assets/img/svg_icon/1.svg",
+  //   },
+  // ];
+  console.log(companies);
   return (
     <div className="top_companies_area">
       <div className="container">
@@ -42,12 +43,12 @@ const HomeCompanies = () => {
           </div>
         </div>
         <div className="row">
-          {companies.map((company, index) => (
+          {companies && companies.map((company, index) => (
             <div className="col-lg-4 col-xl-3 col-md-6" key={index}>
               <SingleCompany
                 name={company.name}
-                availablePositions={company.availablePositions}
-                imagePath={company.imagePath}
+                availablePositions={company.jobs_count}
+                imagePath={Helpers.serverImage(company.logo)}
               />
             </div>
           ))}

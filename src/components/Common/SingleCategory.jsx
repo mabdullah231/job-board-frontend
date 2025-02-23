@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
+
 const SingleCategory = ({ title, availablePositions }) => {
+  
   return (
     <div className="single_catagory">
-      <a href="jobs.html">
+      <Link to="/jobs">
         <h4>{title}</h4>
-      </a>
+      </Link>
       <p>
         <span>{availablePositions}</span> Available position
       </p>

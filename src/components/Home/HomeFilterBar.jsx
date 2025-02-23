@@ -1,6 +1,11 @@
 import React from "react";
+import Select from "react-select"; 
+const HomeFilterBar = ({cities, categories}) => {
 
-const HomeFilterBar = () => {
+  const cityOptions = cities ? cities.map((city) => ({ value: city.id, label: city.city })) : null;
+  const categoryOptions = categories ? categories.map((category) => ({ value: category.id, label: category.name })): null;
+  // console.log(cityOptions);
+  // console.log(categoryOptions);
   return (
     <div className="catagory_area">
       <div className="container">
@@ -12,22 +17,14 @@ const HomeFilterBar = () => {
           </div>
           <div className="col-lg-3 col-md-4">
             <div className="single_input">
-              <select className="wide">
-                <option data-display="Location">Location</option>
-                <option value="1">Dhaka</option>
-                <option value="2">Rangpur</option>
-                <option value="4">Sylhet</option>
-              </select>
+              <Select options={cityOptions} placeholder="Select Location" isClearable />
             </div>
           </div>
+
+          {/* Category Dropdown */}
           <div className="col-lg-3 col-md-4">
             <div className="single_input">
-              <select className="wide">
-                <option data-display="Category">Category</option>
-                <option value="1">Category 1</option>
-                <option value="2">Category 2</option>
-                <option value="4">Category 3</option>
-              </select>
+              <Select options={categoryOptions} placeholder="Select Category" isClearable />
             </div>
           </div>
           <div className="col-lg-3 col-md-12">

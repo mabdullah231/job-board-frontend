@@ -3,9 +3,10 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Helpers from "../../Config/Helpers.js";
 import axios from "axios";
 
-const AdminLayout = () => {
-  const user = Helpers.getItem("user", true); // Get stored user object
+const EmployerLayout = () => {
+  const user = Helpers.authUser; // Get stored user object
   const token = Helpers.getItem("token"); // Get stored token
+  console.log(user);
   const navigate = useNavigate();
   useEffect(() => {
     if (!window.bootstrapLoaded) {
@@ -23,12 +24,18 @@ const AdminLayout = () => {
   }, [location.pathname]);
 
   const navItems = [
-    { name: "Overview", path: "/admin/dashboard", icon: "fas fa-home" },
-    { name: "Categories", path: "/admin/categories", icon: "fas fa-list" },
-    { name: "Cities", path: "/admin/cities", icon: "fas fa-map" },
-    { name: "Skills", path: "/admin/skills", icon: "fas fa-star" },
-    { name: "Tags", path: "/admin/tags", icon: "fas fa-tags" },
-    { name: "Users", path: "/admin/users", icon: "fas fa-user" },
+    { name: "Overview", path: "/employer/dashboard", icon: "fas fa-home" },
+    { name: "Company", path: "/employer/company", icon: "fas fa-building" },
+    {
+      name: "Job Posts",
+      path: "/employer/job_posts",
+      icon: "fas fa-briefcase",
+    },
+    {
+      name: "Job Applications",
+      path: "/employer/job_applications",
+      icon: "fas fa-file-alt",
+    },
   ];
 
   const handleLogout = async () => {
@@ -215,7 +222,7 @@ const AdminLayout = () => {
                 src={`${Helpers.ASSETS_IMAGES_PATH}/logo-small.png`}
                 alt="logo"
               />
-              <span className="logo-text mx-2">Admin Panel</span>
+              <span className="logo-text mx-2">Employer Panel</span>
             </a>
           </div>
           <nav id="app-nav-main" className="app-nav app-nav-main flex-grow-1">
@@ -226,12 +233,12 @@ const AdminLayout = () => {
               {navItems.map((item) => (
                 <li className="nav-item" key={item.name}>
                   <Link
-                    className={`nav-link ${
+                    className={`nav-link d-flex align-items-center ${
                       location.pathname === item.path ? "active" : ""
                     }`}
                     to={item.path}
                   >
-                    <span className="nav-icon">
+                    <span className="nav-icon ">
                       <i className={item.icon}></i>
                     </span>
                     <span className="nav-link-text">{item.name}</span>
@@ -288,4 +295,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default EmployerLayout;

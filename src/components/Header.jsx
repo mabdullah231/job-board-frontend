@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Helpers from "../config/Helpers";
+import Helpers from "../Config/Helpers";
 import axios from "axios";
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
   const userRole = user ? parseInt(user.user_type) : null;
   const navigate = useNavigate();
 
-  const handleLogout =  async () => {
+  const handleLogout = async () => {
     try {
       const response = await axios.post(`${Helpers.apiUrl}logout`, null, {
         headers: {
@@ -96,14 +96,20 @@ const Header = () => {
                           ) : userRole === 1 ? (
                             // Job poster: Show "Poster Panel"
                             <div className="d-none d-lg-block">
-                              <Link className="boxed-btn3" to="/poster/dashboard">
-                                Poster Panel
+                              <Link
+                                className="boxed-btn3"
+                                to="/employer/dashboard"
+                              >
+                                Employer Panel
                               </Link>
                             </div>
                           ) : userRole === 0 ? (
                             // Admin: Show "Admin Panel"
                             <div className="d-none d-lg-block">
-                              <Link className="boxed-btn3" to="/admin/dashboard">
+                              <Link
+                                className="boxed-btn3"
+                                to="/admin/dashboard"
+                              >
                                 Admin Panel
                               </Link>
                             </div>

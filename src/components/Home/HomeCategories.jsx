@@ -1,40 +1,40 @@
 import SingleCategory from "../Common/SingleCategory";
 
-const HomeCategories = () => {
-  const categories = [
-    {
-      title: "Design & Creative",
-      availablePositions: 50,
-    },
-    {
-      title: "Marketing",
-      availablePositions: 50,
-    },
-    {
-      title: "Telemarketing",
-      availablePositions: 50,
-    },
-    {
-      title: "Software & Web",
-      availablePositions: 50,
-    },
-    {
-      title: "Administration",
-      availablePositions: 50,
-    },
-    {
-      title: "Teaching & Education",
-      availablePositions: 50,
-    },
-    {
-      title: "Engineering",
-      availablePositions: 50,
-    },
-    {
-      title: "Garments / Textile",
-      availablePositions: 50,
-    },
-  ];
+const HomeCategories = ( {categories} ) => {
+  // const categories = [
+  //   {
+  //     title: "Design & Creative",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Marketing",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Telemarketing",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Software & Web",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Administration",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Teaching & Education",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Engineering",
+  //     availablePositions: 50,
+  //   },
+  //   {
+  //     title: "Garments / Textile",
+  //     availablePositions: 50,
+  //   },
+  // ];
 
   return (
     <div className="popular_catagory_area">
@@ -47,11 +47,11 @@ const HomeCategories = () => {
           </div>
         </div>
         <div className="row">
-          {categories.map((category, index) => (
+          {categories && categories.map((category, index) => (
             <div className="col-lg-4 col-xl-3 col-md-6" key={index}>
               <SingleCategory
-                title={category.title}
-                availablePositions={category.availablePositions}
+                title={category.name}
+                availablePositions={category.jobs_count}
               />
             </div>
           ))}
