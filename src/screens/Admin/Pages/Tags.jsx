@@ -8,6 +8,7 @@ const Tags = () => {
   const [tagsPerPage] = useState(10);
   const [showForm, setShowForm] = useState(false);
   const [selectedTag, setSelectedTag] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [tagName, setTagName] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(null);
 
@@ -20,6 +21,8 @@ const Tags = () => {
       setTags(response.data);
     } catch (error) {
       console.error("Error fetching tags:", error);
+    } finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -73,6 +76,14 @@ const Tags = () => {
       console.error("Error deleting tag:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div>

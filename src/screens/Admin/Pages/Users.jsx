@@ -6,6 +6,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
+  const [loading, setLoading] = useState(true);
 
   const fetchUsers = async () => {
     try {
@@ -17,6 +18,8 @@ const Users = () => {
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -47,6 +50,14 @@ const Users = () => {
       console.error("Error updating user status:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div>

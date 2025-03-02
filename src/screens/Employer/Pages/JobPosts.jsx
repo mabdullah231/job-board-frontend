@@ -12,6 +12,7 @@ const JobPosts = () => {
   const [skills, setSkills] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -26,13 +27,16 @@ const JobPosts = () => {
   });
   const fetchJobPosts = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `${Helpers.apiUrl}employer/jobpost/all`,
         Helpers.getAuthHeaders()
       );
       setJobPosts(response.data);
       console.log(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching job posts:", error);
     }
   };
@@ -290,7 +294,13 @@ const JobPosts = () => {
       console.error("Error saving job post:", error);
     }
   };
-
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
   return (
     <div className="container mt-3">
       {showForm ? (
@@ -496,7 +506,7 @@ const JobPosts = () => {
               Add Job
             </button>
           </div>
-          <table className="table table-striped mt-4">
+          <table className="table border border-gray-300 mt-4">
             <thead>
               <tr>
                 <th>Title</th>

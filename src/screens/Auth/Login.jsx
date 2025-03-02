@@ -44,6 +44,7 @@ const Login = () => {
       Helpers.toast("success", "Login successful.");
       Helpers.setItem("token", response.data.token);
       Helpers.setItem("user", JSON.stringify(response.data.user));
+      Helpers.refresh()
       const userType = response.data.user.user_type;
       console.log("User Type", userType);
       if (parseInt(userType) == 0) {

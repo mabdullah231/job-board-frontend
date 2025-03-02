@@ -10,6 +10,7 @@ const Cities = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [cityName, setCityName] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [loading, setLoading] = useState(true);
   const fetchCities = async () => {
     try {
       const response = await axios.get(
@@ -19,6 +20,8 @@ const Cities = () => {
       setCities(response.data);
     } catch (error) {
       console.error("Error fetching cities:", error);
+    } finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -72,6 +75,14 @@ const Cities = () => {
       console.error("Error deleting city:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import Helpers from "../../Config/Helpers";
 import SingleCompany from "../Common/SingleCompany";
 
-const HomeCompanies = ({companies}) => {
+const HomeCompanies = ({ companies }) => {
   // const companies = [
   //   {
   //     name: "Snack Studio",
@@ -43,15 +43,16 @@ const HomeCompanies = ({companies}) => {
           </div>
         </div>
         <div className="row">
-          {companies && companies.map((company, index) => (
-            <div className="col-lg-4 col-xl-3 col-md-6" key={index}>
-              <SingleCompany
-                name={company.name}
-                availablePositions={company.jobs_count}
-                imagePath={Helpers.serverImage(company.logo)}
-              />
-            </div>
-          ))}
+          {companies &&
+            companies.map((company, index) => (
+              <div className="col-lg-4 col-xl-3 col-md-6" key={index}>
+                <SingleCompany
+                  name={company.name}
+                  availablePositions={company.jobs_count}
+                  imagePath={Helpers.serverFile(company.logo)}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

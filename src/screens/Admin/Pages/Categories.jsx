@@ -9,6 +9,7 @@ const Categories = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryName, setCategoryName] = useState("");
+  const [loading, setLoading] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   const fetchCategories = async () => {
@@ -20,6 +21,8 @@ const Categories = () => {
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
+    } finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -76,6 +79,14 @@ const Categories = () => {
       console.error("Error deleting category:", error);
     }
   };
+
+  if (loading) {
+    return(
+    <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+  </div>
+  )
+  }
 
   return (
     <div>

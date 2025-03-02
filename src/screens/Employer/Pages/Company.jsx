@@ -81,6 +81,14 @@ const Company = () => {
     setShowForm(true);
   };
 
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mt-2">
       {!showForm && (
@@ -89,7 +97,7 @@ const Company = () => {
           {company ? (
             <>
               <h3 className="mb-2">Company Details</h3>
-              <div className="card mb-4 col-lg-9 mt-2">
+              <div className="card mb-4 col-lg-12 mt-2">
                 <div className="card-body px-4">
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="text">
@@ -109,7 +117,7 @@ const Company = () => {
                     <div className="image">
                       {company.logo && (
                         <img
-                          src={`${Helpers.serverImage(company.logo)}`}
+                          src={`${Helpers.serverFile(company.logo)}`}
                           alt={company.name}
                           className="img-fluid mb-3"
                           style={{ width: "250px", height: "250px" }}

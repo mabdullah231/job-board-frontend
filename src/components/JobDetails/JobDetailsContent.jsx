@@ -1,5 +1,5 @@
-import React from 'react';
-import Helpers from '../../Config/Helpers';
+import React from "react";
+import Helpers from "../../Config/Helpers";
 const JobDetailsContent = ({ job }) => {
   if (!job) return <p>Loading job details...</p>;
 
@@ -9,25 +9,32 @@ const JobDetailsContent = ({ job }) => {
         <div className="single_jobs white-bg d-flex justify-content-between">
           <div className="jobs_left d-flex align-items-center">
             <div className="thumb">
-            <img
-            src={Helpers.serverImage(job.company.logo)}
-            alt={job.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "", // Ensures the image fills the space without distortion
-              // borderRadius: "5px", // Optional: adds rounded corners for a better look
-            }}
-          />
+              <img
+                src={Helpers.serverFile(job.company.logo)}
+                alt={job.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "", // Ensures the image fills the space without distortion
+                  // borderRadius: "5px", // Optional: adds rounded corners for a better look
+                }}
+              />
             </div>
             <div className="jobs_conetent">
-              <a href="#"><h4>{job.title}</h4></a>
+              <a href="#">
+                <h4>{job.title}</h4>
+              </a>
               <div className="links_locat d-flex align-items-center">
                 <div className="location">
-                  <p><i className="fa fa-map-marker"></i> {job.city?.city || "Unknown"}</p>
+                  <p>
+                    <i className="fa fa-map-marker"></i>{" "}
+                    {job.city?.city || "Unknown"}
+                  </p>
                 </div>
                 <div className="location">
-                  <p><i className="fa fa-clock-o"></i> {job.job_type}</p>
+                  <p>
+                    <i className="fa fa-clock-o"></i> {job.job_type}
+                  </p>
                 </div>
               </div>
             </div>
@@ -52,7 +59,7 @@ const JobDetailsContent = ({ job }) => {
           <h4>Skills Required</h4>
           <ul>
             {job.skills && job.skills.length > 0 ? (
-              job.skills.map(skill => <li key={skill.id}>{skill.name}</li>)
+              job.skills.map((skill) => <li key={skill.id}>{skill.name}</li>)
             ) : (
               <li>No specific skills required.</li>
             )}
@@ -68,7 +75,6 @@ const JobDetailsContent = ({ job }) => {
           <h4>Category</h4>
           <p>{job.category?.name || "Uncategorized"}</p>
         </div>
-
       </div>
     </>
   );

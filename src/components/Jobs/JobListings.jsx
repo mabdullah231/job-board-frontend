@@ -3,47 +3,22 @@ import Pagination from "../Common/Pagination";
 import SingleListing from "../Common/SingleListing";
 import ListingSelect from "../Common/ListingSelect";
 import Helpers from "../../Config/Helpers";
-import axios from "axios";
+import Loader from "../Common/Loader";
 
-const JobListings = () => {
+const JobListings = ({ categories, cities, jobPosts }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [jobPosts, setJobPosts] = useState([]);
   const jobsPerPage = 5;
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [citiesRes, categoriesRes, jobPostsRes] = await Promise.all([
-          axios.get(`${Helpers.apiUrl}data/city/all`),
-          axios.get(`${Helpers.apiUrl}data/category/all`),
-          axios.get(`${Helpers.apiUrl}data/jobpost/all`),
-        ]);
+  const locationOptions = cities.map((city) => ({
+    value: city.city,
+    label: city.city,
+  }));
 
-        setCities(citiesRes.data);
-        setCategories(categoriesRes.data);
-        setJobPosts(jobPostsRes.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const locationOptions = cities
-    ? cities.map((city) => ({
-        value: city.city,
-        label: city.city,
-      }))
-    : [];
-
-  const categoryOptions = categories
-    ? categories.map((category) => ({
-        value: category.name,
-        label: category.name,
-      }))
-    : [];
+  const categoryOptions = categories.map((category) => ({
+    value: category.name,
+    label: category.name,
+  }));
 
   const jobTypeOptions = [
     { value: "Full-time", label: "Full-time" },
@@ -66,22 +41,14 @@ const JobListings = () => {
     setCurrentPage(1);
   };
 
-  const filteredJobs = jobPosts
-    ? jobPosts.filter((job) => {
-        return (
-          job.title
-            .toLowerCase()
-            .includes(
-              filters.searchKeyword ? filters.searchKeyword.toLowerCase() : ""
-            ) &&
-          (filters.location === "" ||
-            job.city.city.toLowerCase().includes(filters.location.toLowerCase())) &&
-          (filters.jobType === "" ||
-            job.job_type.toLowerCase() === filters.jobType.toLowerCase()) &&
-          (filters.category === "" || job.category.name.toLowerCase().includes(filters.category.toLowerCase()))
-        );
-      })
-    : [];
+  const filteredJobs = jobPosts.filter((job) => {
+    return (
+      job.title.toLowerCase().includes(filters.searchKeyword.toLowerCase()) &&
+      (filters.location === "" || job.city.city.toLowerCase().includes(filters.location.toLowerCase())) &&
+      (filters.jobType === "" || job.job_type.toLowerCase() === filters.jobType.toLowerCase()) &&
+      (filters.category === "" || job.category.name.toLowerCase().includes(filters.category.toLowerCase()))
+    );
+  });
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -130,8 +97,16 @@ const JobListings = () => {
                       <ListingSelect
                         label="Location"
                         name="location"
-                        value={filters.location ? locationOptions.find(option => option.value === filters.location) : null}
-                        onChange={(selectedItem) => handleFilterChange(selectedItem, "location")}
+                        value={
+                          filters.location
+                            ? locationOptions.find(
+                                (option) => option.value === filters.location
+                              )
+                            : null
+                        }
+                        onChange={(selectedItem) =>
+                          handleFilterChange(selectedItem, "location")
+                        }
                         options={locationOptions}
                       />
                     </div>
@@ -139,8 +114,16 @@ const JobListings = () => {
                       <ListingSelect
                         label="Category"
                         name="category"
-                        value={filters.category ? categoryOptions.find(option => option.value === filters.category) : null}
-                        onChange={(selectedItem) => handleFilterChange(selectedItem, "category")}
+                        value={
+                          filters.category
+                            ? categoryOptions.find(
+                                (option) => option.value === filters.category
+                              )
+                            : null
+                        }
+                        onChange={(selectedItem) =>
+                          handleFilterChange(selectedItem, "category")
+                        }
                         options={categoryOptions}
                       />
                     </div>
@@ -148,8 +131,16 @@ const JobListings = () => {
                       <ListingSelect
                         label="Job Type"
                         name="jobType"
-                        value={filters.jobType ? jobTypeOptions.find(option => option.value === filters.jobType) : null}
-                        onChange={(selectedItem) => handleFilterChange(selectedItem, "jobType")}
+                        value={
+                          filters.jobType
+                            ? jobTypeOptions.find(
+                                (option) => option.value === filters.jobType
+                              )
+                            : null
+                        }
+                        onChange={(selectedItem) =>
+                          handleFilterChange(selectedItem, "jobType")
+                        }
                         options={jobTypeOptions}
                       />
                     </div>
@@ -183,12 +174,12 @@ const JobListings = () => {
                 {currentJobs.map((job) => (
                   <div className="col-lg-12 col-md-12" key={job.id}>
                     <SingleListing
-                    id={job.id}
+                      id={job.id}
                       title={job.title}
                       location={job.city.city}
                       jobType={job.job_type}
                       dateLine={job.deadline}
-                      imagePath={Helpers.serverImage(job.company.logo)}
+                      imagePath={Helpers.serverFile(job.company.logo)}
                     />
                   </div>
                 ))}
@@ -205,7 +196,7 @@ const JobListings = () => {
             </div>
           </div>
         </div>
-      </div>
+ </div>
     </div>
   );
 };

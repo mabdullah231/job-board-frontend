@@ -18,7 +18,7 @@ const SingleListing = ({ title, location, jobType, dateLine, imagePath, id }) =>
           />
         </div>
         <div className="jobs_conetent">
-          <Link to={`jobdetails/${id}`}>
+          <Link to={`/jobdetails/${id}`}>
             <h4>{title}</h4>
           </Link>
           <div className="links_locat d-flex align-items-center">

@@ -12,9 +12,14 @@ class Helpers {
   static DASHBOARD_IMAGES_PATH = "/dashboard/images";
 
   static authUser = JSON.parse(localStorage.getItem("user")) ?? {};
-  static serverImage = (name) => {
+  static serverFile = (name) => {
     return `${this.basePath}/${name}`;
   };
+
+  static refresh() {
+    this.authUser = JSON.parse(localStorage.getItem("user")) ?? {};
+  }
+
 
   static authHeaders = {
     headers: {

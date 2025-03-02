@@ -1,9 +1,8 @@
-// src/App.jsx
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./screens/Layout";
 import AdminLayout from "./screens/Admin/AdminLayout";
 import Helpers from "./Config/Helpers";
-import { Home, Jobs, Contact, JobDetails, Login, Register } from "./screens";
+import { Home, Jobs, Contact, JobDetails, Login, Register, Profile } from "./screens";
 import {
   AdminDashboard,
   AdminCities,
@@ -19,6 +18,8 @@ import {
   JobApplications,
   JobPosts,
 } from "./screens/Employer/Pages";
+import Loader from "./components/Common/Loader";
+Loader
 
 const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
   let user = Helpers.getItem("user", true); // Get stored user
@@ -62,10 +63,6 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
           return <Navigate to="/admin/dashboard" />;
         case 1:
           return <Navigate to="/employer/dashboard" />;
-        // case 2:
-        //   return <Navigate to="/user/dashboard" />;
-        // default:
-        //   return <Navigate to="/login" />;
       }
     }
     return children;
@@ -73,6 +70,7 @@ const Auth = ({ children, isAuth = true, allowedRoles = [] }) => {
 };
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -82,13 +80,19 @@ function App() {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/jobdetails/:id" element={<JobDetails />} />
-
-          {/* Public routes but restricted for logged-in users */}
           <Route
             path="/login"
             element={
               <Auth isAuth={false}>
                 <Login />
+              </Auth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Auth isAuth={true}>
+                <Profile/>
               </Auth>
             }
           />

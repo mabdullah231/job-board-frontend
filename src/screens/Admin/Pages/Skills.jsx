@@ -9,6 +9,7 @@ const Skills = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [skillName, setSkillName] = useState("");
+  const [loading, setLoading] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   const fetchSkills = async () => {
@@ -20,6 +21,8 @@ const Skills = () => {
       setSkills(response.data);
     } catch (error) {
       console.error("Error fetching skills:", error);
+    } finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -73,6 +76,14 @@ const Skills = () => {
       console.error("Error deleting skill:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div>

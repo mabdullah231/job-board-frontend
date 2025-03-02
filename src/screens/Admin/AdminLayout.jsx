@@ -44,6 +44,7 @@ const AdminLayout = () => {
         Helpers.removeItem("user");
         Helpers.removeItem("token");
         navigate("/login"); // Redirect to login page
+        Helpers.refresh()
       }
     } catch (error) {
       let errorMessage = "Logout failed. Please try again.";

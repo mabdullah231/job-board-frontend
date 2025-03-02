@@ -20,6 +20,7 @@ const Header = () => {
         Helpers.toast("success", "Logged out successfully!");
         Helpers.removeItem("user");
         Helpers.removeItem("token");
+        Helpers.refresh()
         navigate("/login"); // Redirect to login page
       }
     } catch (error) {
@@ -88,11 +89,16 @@ const Header = () => {
                         <>
                           {userRole === 2 ? (
                             // Simple user: Show logout
+                            <>
                             <div className="phone_num d-none d-xl-block">
                               <Link to="#" onClick={handleLogout}>
                                 Logout
                               </Link>
+                              </div>
+                            <div className="phone_num  d-none d-xl-block">
+                              <Link to="/profile"><i className="fa fa-4x fa-user text-white"></i></Link>
                             </div>
+                            </>
                           ) : userRole === 1 ? (
                             // Job poster: Show "Poster Panel"
                             <div className="d-none d-lg-block">

@@ -35,3 +35,8 @@ export { default as JobDetailsContent } from "./JobDetails/JobDetailsContent";
 export { default as JobDetailsForm } from "./JobDetails/JobDetailsForm";
 export { default as JobDetailsSummary } from "./JobDetails/JobDetailsSummary";
 export { default as JobDetailsShare } from "./JobDetails/JobDetailsShare";
+
+// Profile Page
+
+export { default as ProfileHeroSection } from "./Profile/ProfileHeroSection";
+export { default as ProfileTabs } from "./Profile/ProfileTabs";
