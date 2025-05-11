@@ -16,6 +16,20 @@ const AdminLayout = () => {
         .then(() => Helpers.loadScript("bootstrap.min.js", true))
         .then(() => Helpers.loadScript("app.js", true));
     }
+    const loginTimestamp = Helpers.getItem("loginTimestamp");
+    if (loginTimestamp) {
+      const currentTime = Date.now();
+      const timeElapsed = currentTime - loginTimestamp; // Time in milliseconds
+      const timeLimit = 120 * 60 * 1000; // 120 minutes in milliseconds
+      if (timeElapsed > timeLimit) {
+        Helpers.toast("error", "Session Expired! Log In Again Please");
+        Helpers.removeItem("user");
+        Helpers.removeItem("token");
+        Helpers.removeItem("loginTimestamp"); // Clear the timestamp
+        Helpers.refresh();
+        navigate("/login"); // Call the logout function if time limit exceeded
+      }
+    }
   }, []);
   const location = useLocation();
   useEffect(() => {
@@ -43,8 +57,9 @@ const AdminLayout = () => {
         Helpers.toast("success", "Logged out successfully!");
         Helpers.removeItem("user");
         Helpers.removeItem("token");
+        Helpers.removeItem("loginTimestamp");
         navigate("/login"); // Redirect to login page
-        Helpers.refresh()
+        Helpers.refresh();
       }
     } catch (error) {
       let errorMessage = "Logout failed. Please try again.";
@@ -245,7 +260,7 @@ const AdminLayout = () => {
             <nav className="app-nav app-nav-footer">
               <ul className="app-menu footer-menu list-unstyled">
                 <li className="nav-item">
-                  <a className="nav-link" href="settings.html">
+                  <a className="nav-link" href="#">
                     <span className="nav-icon">
                       <i className="fas fa-cog"></i>
                     </span>
@@ -268,20 +283,15 @@ const AdminLayout = () => {
       <footer className="app-footer">
         <div className="container text-center py-3">
           <small className="copyright">
-            Designed with <span className="sr-only">love</span>
-            <i
-              className="fas fa-heart"
-              style={{ color: "#fb866a" }}
-            ></i> by{" "}
+            Powered By{" "}
             <a
               className="app-link"
-              href="http://themes.3rdwavemedia.com"
+              href="http://macodes.dev"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Xiaoying Riley
-            </a>{" "}
-            for developers
+              macodes
+            </a>
           </small>
         </div>
       </footer>

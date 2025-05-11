@@ -35,6 +35,7 @@ const ForgotPassword = () => {
     <div>
       <div className="bradcam_area bradcam_bg_1">
         <div className="container">
+          
           <div className="row">
             <div className="col-xl-12">
               <div className="bradcam_text">
@@ -47,6 +48,12 @@ const ForgotPassword = () => {
 
       <div className="forgot-password-area">
         <div className="container col-xl-4 py-5">
+        <img
+            src="/assets/img/logo.png"
+            className="mb-4 d-block mx-auto"
+            alt="Logo"
+            style={{ width: "100px", height: "100px" }}
+          />
           <form onSubmit={handleSubmit} className="form-forgot-password">
             {step === 1 && (
               <div className="form-group">

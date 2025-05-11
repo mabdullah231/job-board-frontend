@@ -94,9 +94,10 @@ const Register = () => {
       <div className="register-form-area">
         <div className="container col-xl-4 py-5">
           <img
-            src="/assets/img/logo-small.png"
+            src="/assets/img/logo.png"
             className="mb-4 d-block mx-auto"
-            alt=""
+            alt="Logo"
+            style={{ width: "100px", height: "100px" }}
           />
           <form onSubmit={handleSubmit} className="form-register">
             <div className="form-group">

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Helpers from "../Config/Helpers.js";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header, Footer } from "../components";
 import Loader from "../components/Common/Loader.jsx";
 
 const Layout = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [loader, setLoader] = useState(true);
 
@@ -49,7 +50,11 @@ const Layout = () => {
               $("#amount").val(`$${ui.values[0]} - $${ui.values[1]}/ Year`);
             },
           });
-          $("#amount").val(`$${$("#slider-range").slider("values", 0)} - $${$("#slider-range").slider("values", 1)}/ Year`);
+          $("#amount").val(
+            `$${$("#slider-range").slider("values", 0)} - $${$(
+              "#slider-range"
+            ).slider("values", 1)}/ Year`
+          );
         }
       })
       .finally(() => {
@@ -57,6 +62,20 @@ const Layout = () => {
           setLoader(false);
         }, 500); // Show loader for at least 1 second
       });
+    const loginTimestamp = Helpers.getItem("loginTimestamp");
+    if (loginTimestamp) {
+      const currentTime = Date.now();
+      const timeElapsed = currentTime - loginTimestamp; // Time in milliseconds
+      const timeLimit = 120 * 60 * 1000; // 120 minutes in milliseconds
+      if (timeElapsed > timeLimit) {
+        Helpers.toast("error", "Session Expired! Log In Again Please");
+        Helpers.removeItem("user");
+        Helpers.removeItem("token");
+        Helpers.removeItem("loginTimestamp"); // Clear the timestamp
+        Helpers.refresh();
+        navigate("/login"); // Call the logout function if time limit exceeded
+      }
+    }
   }, [location]);
 
   if (loader) {

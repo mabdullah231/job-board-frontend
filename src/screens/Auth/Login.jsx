@@ -44,6 +44,7 @@ const Login = () => {
       Helpers.toast("success", "Login successful.");
       Helpers.setItem("token", response.data.token);
       Helpers.setItem("user", JSON.stringify(response.data.user));
+      Helpers.setItem("loginTimestamp", Date.now()); // Store the timestamp
       Helpers.refresh()
       const userType = response.data.user.user_type;
       console.log("User Type", userType);
@@ -89,9 +90,10 @@ const Login = () => {
       <div className="login-form-area">
         <div className="container col-xl-4 py-5">
           <img
-            src="/assets/img/logo-small.png"
+            src="/assets/img/logo.png"
             className="mb-4 d-block mx-auto"
             alt="Logo"
+            style={{width:"100px", height:"100px"}}
           />
 
           <form onSubmit={handleSubmit} className="form-login">

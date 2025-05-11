@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./screens/Layout";
 import AdminLayout from "./screens/Admin/AdminLayout";
 import Helpers from "./Config/Helpers";
-import { Home, Jobs, Contact, JobDetails, Login, Register, Profile } from "./screens";
+import { Home, Jobs, Contact, JobDetails, Login, Register, Profile, ForgotPassword } from "./screens";
 import {
   AdminDashboard,
   AdminCities,
@@ -101,6 +101,14 @@ function App() {
             element={
               <Auth isAuth={false}>
                 <Register />
+              </Auth>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <Auth isAuth={false}>
+                <ForgotPassword />
               </Auth>
             }
           />

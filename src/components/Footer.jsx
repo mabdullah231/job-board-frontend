@@ -12,13 +12,13 @@ const Footer = () => {
               >
                 <div className="footer_logo">
                   <a href="#">
-                    <img src="assets/img/logo.png" alt="" />
+                    <img src="assets/img/logo.png" style={{width:"100px", height:"100px"}} alt="" />
                   </a>
                 </div>
                 <p>
-                  finloan@support.com <br />
-                  +10 873 672 6782 <br />
-                  600/D, Green road, NewYork
+                  info@macodes.dev <br />
+                  +92 304-9345139 <br />
+                  Multan, Punjab Pakistan
                 </p>
                 <div className="socail_links">
                   <ul>
@@ -29,19 +29,15 @@ const Footer = () => {
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fa fa-google-plus"></i>
+                        <i className="ti-twitter"></i>
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fa fa-twitter"></i>
+                        <i className="ti-instagram"></i>
                       </a>
                     </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-instagram"></i>
-                      </a>
-                    </li>
+
                   </ul>
                 </div>
               </div>
@@ -123,15 +119,15 @@ const Footer = () => {
             <div className="col-xl-12">
               <p className="copy_right text-center">
                 Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script>
-                All rights reserved | This template is made with
-                <i className="fa fa-heart-o" aria-hidden="true"></i> by
+                {new Date().getFullYear()}&nbsp;
+                 All rights reserved | Powered
+                by 
                 <a
-                  href="https://colorlib.com"
+                  href="https://macodes.dev"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Colorlib
+                   &nbsp;macodes
                 </a>
               </p>
             </div>

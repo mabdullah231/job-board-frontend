@@ -1,11 +1,10 @@
-// src/config/helpers.js
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 
 class Helpers {
   static localhost = "127.0.0.1:8000";
-  static server = "";
-  static basePath = `//${this.localhost}`;
+  static server = "https://jobboardxapi.macodes.dev";
+  static basePath = `//${this.server}`;
   static apiUrl = `${this.basePath}/api/`;
   static googleUrl = `${this.basePath}/`;
   static ASSETS_IMAGES_PATH = "/assets/img";
@@ -19,7 +18,6 @@ class Helpers {
   static refresh() {
     this.authUser = JSON.parse(localStorage.getItem("user")) ?? {};
   }
-
 
   static authHeaders = {
     headers: {
