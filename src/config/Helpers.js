@@ -3,7 +3,7 @@ import "notyf/notyf.min.css";
 
 class Helpers {
   static localhost = "127.0.0.1:8000";
-  static server = "https://jobboardxapi.macodes.dev";
+  static server = "jobboardxapi.macodes.dev";
   static basePath = `//${this.server}`;
   static apiUrl = `${this.basePath}/api/`;
   static googleUrl = `${this.basePath}/`;
